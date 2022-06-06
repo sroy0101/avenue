@@ -5,3 +5,10 @@ djangorestframework==3.13.1
 drf-spectacular==0.22.1
 Pillow==9.1.1
 Wand==0.6.7
+
+
+#linters
+black==22.3.0
+flake8==4.0.1
+isort==5.10.1
+

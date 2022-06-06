@@ -1,0 +1,5 @@
+
+
+python -m isort backend
+python -m black backend
+python -m flake8 backend
