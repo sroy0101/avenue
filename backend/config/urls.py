@@ -18,8 +18,9 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import include, path
 from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView
-from product import views
 from rest_framework import routers
+
+from product import views
 
 router = routers.DefaultRouter()
 router.register(r"products", views.ProductView, "product")
