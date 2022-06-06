@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+
+{% block title %}{{ product.name }}{% endblock title %}
+
+{% block content %}
+    <div class="product-detail">
+        <h2>{{ product.name }}</h2>
+
+        <h3>Description:</h3>
+        <p>{{ product.description }}</p>
+
+        <h3>SKU</h3>
+        <p>{{ product.sku}}</p>
+
+        <h3>Price</h3>
+        <p>{{ product.price}}</p>
+
+        <h3>Name</h3>
+        <p>{{ product.name}}</p>
+
+        <h3>Description</h3>
+        <p>{{ product.description}}</p>
+
+        <h3>Shipment Time</h3>
+        <p>{{ product.shipment_time}}</p>
+
+        <h3>Inventory</h3>
+        <p>{{ product.inventory}}</p>
+
+        <h3>Gender</h3>
+        <p>{{ product.pretty_gender }}</p>
+
+        {% if product.images %}
+        <div class="aveunue-images">
+            <h3>Image Gallery</h3>
+            {% for image in product.images %}
+            <a href="{{ image.image.url }}">
+                <img style="max-width: 100%;" class="product-image" src="{{image.get_large_image_url}}" alt="{{image.name}}">
+            </a>
+            <p>{{ image.name }}</p>
+            {% endfor %}
+        </div>
+        {% endif %}
+
+    </div>
+{% endblock content %}

@@ -1,4 +1,4 @@
-"""config URL Configuration
+"""backend URL Configuration
 
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/4.0/topics/http/urls/
@@ -13,10 +13,30 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+from django.conf import settings
+from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import include, path
+from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView
+from product import views
+from rest_framework import routers
+
+router = routers.DefaultRouter()
+router.register(r"products", views.ProductView, "product")
+router.register(r"productimages", views.ProductImageView, "productimages")
+
 
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("accounts/", include("django.contrib.auth.urls")),
-]
+    path("api/", include(router.urls)),
+    # Raw Schema
+    path("api/schema/", SpectacularAPIView.as_view(), name="schema"),
+    # Schema UI
+    path(
+        "api/schema/swagger-ui/",
+        SpectacularSwaggerView.as_view(url_name="schema"),
+        name="swagger-ui",
+    ),
+    path("", include("store.urls")),
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
