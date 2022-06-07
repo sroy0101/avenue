@@ -29,6 +29,10 @@ class App extends Component {
   componentDidMount() {
     this.initialize()
   }
+  /**
+   * Show the login modal (if no access token).
+   * Otherwise, get the product list from backend.
+   */
   initialize = () => {
     // Do we have a token and is valid (test with API)
     if (this.state.token == null) {
@@ -49,6 +53,13 @@ class App extends Component {
   isRetry = () => {
     return this.state.loginRetry;
   }
+
+  /**
+   * Get the user token from backend with the username and password.
+   * This event is triggered by the loginModal.
+   * @param {*} username
+   * @param {*} password
+   */
   handleLogin = (username, password) => {
     // console.log(username, password)
     if (username && password) {
@@ -76,6 +87,9 @@ class App extends Component {
         })
     }
   };
+  /**
+   * Refresh the product list and product images.
+   */
   refreshList = () => {
     API
       .get("/api/products/")

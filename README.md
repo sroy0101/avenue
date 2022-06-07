@@ -14,8 +14,18 @@ The `backend` consists of three django apps:
 ## `frontend`
 To Be Added.
 
+## Run avenue using docker
+Clone the repository and run docker-compose.
+```
+git clone git@github.com:sroy0101/avenue.git
+cd avenue
+docker compose up
+```
 
-## Development setup
+
+## Development Setup
+
+### backend
 1. Clone the `avenue` git repo from Github in your project folder.
 ```
 git clone git@github.com:sroy0101/avenue.git
@@ -28,7 +38,7 @@ python -m venv venv
 source venv/bin/activate
 ```
 
-3. Add this to your .bashrc or .profile file and open a new terminal
+3. Add this to your .bashrc or .profile file and open a new terminal (For Mac or Linux)
 ```
 export PYENV_ROOT="$HOME/.pyenv"
 export PATH="$PYENV_ROOT/shims:$PATH"
@@ -37,21 +47,27 @@ if command -v pyenv 1>/dev/null 2>&1; then
 fi
 ```
 
-4. Run tests
+5. Install python packages
 ```
 cd backend
+pip install -r requirements.txt
+```
+
+4. Run tests
+```
 ./bin/runtests
 ```
 
-5. Run docker
+5. Run backend manually
 ```
-docker compose up
+./manage.py runserver
 ```
 
 The application should be running.
+
 Open web browser on `localhost:8000/api/schema/swagger-ui` to see the product and product image api schema. Since trying the API from `swagger-ui` requires user authentication, see below for creating  users.
 
-## Create Users
+### Create Users
 
 1. Add a superuser (make sure application is running)
 ```
@@ -70,5 +86,13 @@ Superuser created successfully.
 TODO - Add More Details
 
 
+### frontend
+
+1. Install node packages
+```
+cd frontend
+npm install
+```
+2.
 
 

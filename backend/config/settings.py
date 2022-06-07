@@ -37,16 +37,14 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-
-    'accounts.apps.AccountsConfig',
-
+    # 'accounts.apps.AccountsConfig',
     # REST
     "django_filters",
     "corsheaders",
     "rest_framework",
-    'rest_framework.authtoken',
+    "rest_framework.authtoken",
     "drf_spectacular",
-    'dj_rest_auth',
+    "dj_rest_auth",
     # locals
     "accounts",
     "product",
@@ -166,4 +164,4 @@ AUTH_USER_MODEL = "accounts.CustomUser"
 LOGIN_REDIRECT_URL = "store"
 LOGOUT_REDIRECT_URL = "store"
 
-CORS_ORIGIN_WHITELIST = ('http://localhost:3000',)
+CORS_ORIGIN_WHITELIST = ("http://localhost:3000",)

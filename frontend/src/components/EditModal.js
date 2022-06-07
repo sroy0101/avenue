@@ -11,6 +11,9 @@ import {
     Label,
 } from "reactstrap";
 
+/**
+ * Display a modal to add a product or edit an existing one.
+ */
 export default class EditModal extends Component {
     constructor(props) {
         super(props);
@@ -128,16 +131,6 @@ export default class EditModal extends Component {
                                 <option value="U">U</option>
                             </Input>
                         </FormGroup>
-
-
-
-
-
-
-
-
-
-
                     </Form>
                 </ModalBody>
                 <ModalFooter>

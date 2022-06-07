@@ -11,6 +11,9 @@ import {
     Label,
 } from "reactstrap";
 
+/**
+ * Display a login modal and collect the username and password.
+ */
 export default class LoginModal extends Component {
     constructor(props) {
         super(props);
@@ -51,7 +54,7 @@ export default class LoginModal extends Component {
                             ></Input>
                         </FormGroup>
                         <FormGroup>
-                            <Label for="password">Price</Label>
+                            <Label for="password">Password</Label>
                             <Input
                                 type="password"
                                 id="password"
