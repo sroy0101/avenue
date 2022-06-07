@@ -57,8 +57,12 @@ Open web browser on `localhost:8000/api/schema/swagger-ui` to see the product an
 ```
 cd backend
 python manage.py createsuperuser
-
 ... then follow the prompts.
+Username: <superuser name>
+Email address: XXX@example.com
+Password:
+Password (again):
+Superuser created successfully.
 ```
 2. Open `localhost:8000/admin` on your browser and login as superuser.
 3. Create new users using admin UI.

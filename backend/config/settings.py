@@ -37,11 +37,16 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+
+    'accounts.apps.AccountsConfig',
+
     # REST
     "django_filters",
     "corsheaders",
     "rest_framework",
+    'rest_framework.authtoken',
     "drf_spectacular",
+    'dj_rest_auth',
     # locals
     "accounts",
     "product",
@@ -128,11 +133,6 @@ USE_TZ = True
 
 STATIC_URL = "static/"
 
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/4.0/howto/static-files/
-
-STATIC_URL = "static/"
-
 MEDIA_URL = "/media/"
 MEDIA_ROOT = BASE_DIR / "media"
 
@@ -141,11 +141,6 @@ MEDIA_ROOT = BASE_DIR / "media"
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
-
-# Account configs
-AUTH_USER_MODEL = "accounts.CustomUser"
-LOGIN_REDIRECT_URL = "home"
-LOGOUT_REDIRECT_URL = "home"
 
 # Django REST Framework Config
 REST_FRAMEWORK = {
@@ -165,3 +160,10 @@ IMAGE_SIZES = {
     "medium": (600, 400),
     "large": (1200, 720),
 }
+
+# Account configs
+AUTH_USER_MODEL = "accounts.CustomUser"
+LOGIN_REDIRECT_URL = "store"
+LOGOUT_REDIRECT_URL = "store"
+
+CORS_ORIGIN_WHITELIST = ('http://localhost:3000',)
