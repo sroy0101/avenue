@@ -14,7 +14,7 @@ import {
 /**
  * Display a login modal and collect the username and password.
  */
-export default class LoginModal extends Component {
+ export default class LoginModal extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -54,7 +54,7 @@ export default class LoginModal extends Component {
                             ></Input>
                         </FormGroup>
                         <FormGroup>
-                            <Label for="password">Password</Label>
+                            <Label for="password">Price</Label>
                             <Input
                                 type="password"
                                 id="password"
@@ -70,7 +70,7 @@ export default class LoginModal extends Component {
                     <Button
                         color="success"
                         onClick={() => onSave(this.state.username, this.state.password)}
-                    >Save</Button>
+                    >Login</Button>
                 </ModalFooter>
             </Modal>
         );

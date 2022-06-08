@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import EditModal from "./components/EditModal";
+import EditImageModal from "./components/EditImageModal";
 import LoginModal from "./components/LoginModal";
 
 import API from './api';
@@ -23,6 +24,12 @@ class App extends Component {
         shipment_time: "",
         inventory: "",
         gender: "",
+      },
+      activeImage: {
+        name: "",
+        product: null,
+        image: "",
+        default: false,
       }
     }
   }
@@ -94,7 +101,14 @@ class App extends Component {
     API
       .get("/api/products/")
       .then((res) => this.setState({ productList: res.data }))
-      .catch((err) => console.log(err))
+      .catch((err) => {
+        if (err.response && err.response.status == 403) {
+          window.alert("Insufficient permissions. Please log in with a user belonging to the Merchandiser group.")
+          window.location.reload()
+        }
+        console.log(err);
+        console.log(err.response.status)
+      })
     API
       .get("/api/productimages/")
       .then((res) => this.setState({ productImageList: res.data }))
@@ -103,6 +117,9 @@ class App extends Component {
   };
   toggleEditModal = () => {
     this.setState({ editModal: !this.state.editModal })
+  };
+  toggleImageEditModal = () => {
+    this.setState({ editImageModal: !this.state.editImageModal})
   };
   handleSubmit = (item) => {
     this.toggleEditModal();
@@ -117,10 +134,26 @@ class App extends Component {
       .post("/api/products/", item)
       .then((res) => this.refreshList());
   };
+  handleImageSubmit = (item) => {
+    this.toggleImageEditModal();
+    API
+      .post('/api/productimages/', item, {
+        headers: {
+          "Content-Type": "multipart/form-data"
+        }
+      })
+      .then((res) => this.refreshList());
+    return;
+  };
   handleDelete = (item) => {
     API
       .delete(`/api/products/${item.id}/`)
       .then((res) => this.refreshList)
+  };
+  handleProductImageDelete = (productImage) => {
+    API
+      .delete(`/api/productimages/${productImage.id}`)
+      .then((res) => this.refreshList())
   };
   createItem = () => {
     const item = {
@@ -141,14 +174,37 @@ class App extends Component {
       editModal: !this.state.editModal
     })
   };
+  addImage = (product) => {
+    console.log()
+    const image = {
+      name: "",
+      product: product.id,
+      image: "",
+      default: false
+    }
+    this.setState({
+      activeImage: image,
+      editImageModal: !this.state.editImageModal
+    })
+  };
+  get_small_img_url = (image_url) => {
+    let parts = image_url.split(".")
+    let small_url = parts.slice(0, -1) + "_small." + parts.pop()
+    return small_url;
+  };
   displayCompleted = (status) => {
     if (status) {
       return this.setState({ viewCompleted: true });
     }
     return this.setState({ viewCompleted: false })
   };
+
+  /**
+   * Render the products and their images from the product list.
+   * A product can have multiple images.
+   * @returns html segment containing the list of products and images.
+   */
   renderItems = () => {
-    const { viewCompleted } = this.state;
     const newItems = this.state.productList
     return newItems.map((item) => (
       <li
@@ -160,7 +216,7 @@ class App extends Component {
             className="todo-title mr-2"
             title={item.name}
           >
-            {item.name}
+            <h5>{item.name}</h5>
           </span>
           <span>
             <button
@@ -175,15 +231,38 @@ class App extends Component {
             </button>
           </span>
         </div>
+        <div className="mt-4 w-100">
+          {this.state.productImageList.filter((x) => x.product === item.id).map((productImage) => (
+            <div key={productImage.id} className="d-inline-block relative rounded pr-3 mb-1 productImagePreview">
+              <img alt={productImage.name} className="block rounded w-100" src={this.get_small_img_url(productImage.image)}/>
+              <div>
+                <a className="text-danger cursor-pointer" onClick={() => this.handleProductImageDelete(productImage)}>Delete</a>
+              </div>
+            </div>
+          ))}
+        </div>
+        <div className="mt-2 mb-2">
+            <button
+              className="btn btn-success"
+              onClick={() => this.addImage(item)}
+            >Add Image
+            </button>
+        </div>
       </li>
     ));
   }
+
+  /**
+   * Render the main block of the app.
+   * Uses components - EditModal, EditImageModal and LoginModal.
+   * @returns an html document.
+   */
   render() {
     return (
       <main className="container">
         <h1 className="text-white text-uppercase text-center my-4">Product Manager</h1>
         <div className="row">
-          <div className="col-md-6 col-sm-10 mx-auto p-0">
+          <div className="col-md-8 col-sm-10 mx-auto p-0">
             <div className="card p-3">
               <div className="mb-4">
                 <button
@@ -205,6 +284,13 @@ class App extends Component {
           >
           </EditModal>
         ) : null }
+        { this.state.editImageModal ? (
+          <EditImageModal
+            activeImage={this.state.activeImage}
+            toggle={this.toggleImageEditModal}
+            onSave={this.handleImageSubmit}
+          ></EditImageModal>
+        ): null }
         { this.state.loginModal ? (
           <LoginModal
           toggle={this.toggleLoginModal}

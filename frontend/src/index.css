@@ -15,3 +15,16 @@ code {
 body {
   background: #333;
 }
+
+.productImagePreview {
+  max-width: 100px;
+}
+
+.productImagePreview a {
+  font-size: 0.8rem;
+  cursor: pointer;
+}
+
+.modalImagePreview {
+  max-width: 100%;
+}
