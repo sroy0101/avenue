@@ -60,6 +60,7 @@ MIDDLEWARE = [
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     "corsheaders.middleware.CorsMiddleware",
+    "store.middleware.CartMiddleware",
 ]
 
 ROOT_URLCONF = "config.urls"
@@ -130,6 +131,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
 STATIC_URL = "static/"
+STATICFILES_DIRS = [BASE_DIR / "static"]
 
 MEDIA_URL = "/media/"
 MEDIA_ROOT = BASE_DIR / "media"
@@ -150,7 +152,7 @@ REST_FRAMEWORK = {
     "DEFAULT_PERMISSION_CLASSES": ("rest_framework.permissions.IsAuthenticated",),
 }
 SPECTACULAR_SETTINGS = {
-    "TITLE": "Avenue",
+    "TITLE": "avenue",
     "DESCRIPTION": "API to power the merchant editor in the Avenue",
     "VERSION": "0.0.1",
     "SERVE_INCLUDE_SCHEMA": False,
