@@ -102,7 +102,7 @@ class App extends Component {
       .get("/api/products/")
       .then((res) => this.setState({ productList: res.data }))
       .catch((err) => {
-        if (err.response && err.response.status == 403) {
+        if (err.response && err.response.status === 403) {
           window.alert("Insufficient permissions. Please log in with a user belonging to the Merchandiser group.")
           window.location.reload()
         }

@@ -30,7 +30,7 @@ export default class EditImageModal extends Component {
         this.setState({activeImage: activeImage})
     };
     render() {
-        const {activeItem, toggle, onSave} = this.props;
+        const {toggle, onSave} = this.props;
 
         return (
             <Modal isOpen={true} toggle={toggle}>
