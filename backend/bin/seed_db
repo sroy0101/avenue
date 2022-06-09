@@ -1,0 +1,5 @@
+#!/bin/bash
+
+# Extract media file
+tar -xzf media.tar.gz
+python manage.py loaddata avenue_seed_file.json
