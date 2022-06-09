@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import EditModal from "./components/EditModal";
-import EditImageModal from "./components/EditImageModal";
 import LoginModal from "./components/LoginModal";
+import EditImageModal from "./components/EditImageModal";
 
 import API from './api';
 
@@ -13,6 +13,7 @@ class App extends Component {
       productList: [],
       productImageList: [],
       editModal: false,
+      editImageModal: false,
       loginModal: false,
       // token: "ae0b8a11cb3ec4ab266f4d5dc83114d6fb79ca37",
       activeItem: {
@@ -31,15 +32,12 @@ class App extends Component {
         image: "",
         default: false,
       }
+
     }
   }
   componentDidMount() {
     this.initialize()
   }
-  /**
-   * Show the login modal (if no access token).
-   * Otherwise, get the product list from backend.
-   */
   initialize = () => {
     // Do we have a token and is valid (test with API)
     if (this.state.token == null) {
@@ -60,13 +58,6 @@ class App extends Component {
   isRetry = () => {
     return this.state.loginRetry;
   }
-
-  /**
-   * Get the user token from backend with the username and password.
-   * This event is triggered by the loginModal.
-   * @param {*} username
-   * @param {*} password
-   */
   handleLogin = (username, password) => {
     // console.log(username, password)
     if (username && password) {
@@ -94,27 +85,31 @@ class App extends Component {
         })
     }
   };
-  /**
-   * Refresh the product list and product images.
-   */
   refreshList = () => {
     API
       .get("/api/products/")
-      .then((res) => this.setState({ productList: res.data }))
-      .catch((err) => {
-        if (err.response && err.response.status === 403) {
-          window.alert("Insufficient permissions. Please log in with a user belonging to the Merchandiser group.")
-          window.location.reload()
-        }
-        console.log(err);
-        console.log(err.response.status)
+      .then((res) => {
+        debugger;
+        this.setState({ productList: res.data })
       })
+      .catch((err) => this.process_refresh_error(err))
     API
       .get("/api/productimages/")
       .then((res) => this.setState({ productImageList: res.data }))
-      .catch((err) => console.log(err))
+      .catch((err) => this.process_refresh_error(err))
 
   };
+  process_refresh_error = (err) => {
+    if (err.response && err.response.status == 403) {
+      window.alert("Insufficient permissions. Please log in with a user belonging to the Merchandiser group.")
+      window.location.reload()
+    }
+    if (err.response && err.response.status == 404) {
+      this.setState({ productList: [] });
+    }
+    console.log(err);
+    console.log(err.response.status);
+  }
   toggleEditModal = () => {
     this.setState({ editModal: !this.state.editModal })
   };
@@ -129,10 +124,11 @@ class App extends Component {
         .put(`/api/products/${item.id}/`, item)
         .then((res) => this.refreshList());
       return;
-    }
+    } else {
     API
       .post("/api/products/", item)
       .then((res) => this.refreshList());
+    }
   };
   handleImageSubmit = (item) => {
     this.toggleImageEditModal();
@@ -148,12 +144,22 @@ class App extends Component {
   handleDelete = (item) => {
     API
       .delete(`/api/products/${item.id}/`)
-      .then((res) => this.refreshList)
+      .then((res) => this.refreshList())
+      .catch((err) => {
+        if (err.response && err.response.status == 404) {
+          this.refreshList();
+        }
+      })
   };
   handleProductImageDelete = (productImage) => {
     API
       .delete(`/api/productimages/${productImage.id}`)
       .then((res) => this.refreshList())
+      .catch((err) => {
+        if (err.response && err.response.status == 404) {
+          this.refreshList();
+        }
+      })
   };
   createItem = () => {
     const item = {
@@ -187,23 +193,17 @@ class App extends Component {
       editImageModal: !this.state.editImageModal
     })
   };
-  get_small_img_url = (image_url) => {
-    let parts = image_url.split(".")
-    let small_url = parts.slice(0, -1) + "_small." + parts.pop()
-    return small_url;
-  };
   displayCompleted = (status) => {
     if (status) {
       return this.setState({ viewCompleted: true });
     }
     return this.setState({ viewCompleted: false })
   };
-
-  /**
-   * Render the products and their images from the product list.
-   * A product can have multiple images.
-   * @returns html segment containing the list of products and images.
-   */
+  get_small_img_url = (image_url) => {
+    let parts = image_url.split(".")
+    let small_url = parts.slice(0, -1) + "_small." + parts.pop()
+    return small_url;
+  };
   renderItems = () => {
     const newItems = this.state.productList
     return newItems.map((item) => (
@@ -247,16 +247,11 @@ class App extends Component {
               onClick={() => this.addImage(item)}
             >Add Image
             </button>
+
         </div>
       </li>
     ));
   }
-
-  /**
-   * Render the main block of the app.
-   * Uses components - EditModal, EditImageModal and LoginModal.
-   * @returns an html document.
-   */
   render() {
     return (
       <main className="container">
