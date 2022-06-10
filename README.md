@@ -3,7 +3,26 @@
 ### A sample e-commerce application
 
 This application consists of two projects - `backend` and `fronend`.
-The backend is built on django and the frontend is built using React.
+The backend is built on [django](https://docs.djangoproject.com/en/4.0/) and the frontend is built using [React](https://create-react-app.dev/).
+
+## Try avenue
+**avenue** is packaged as a docker app. To run it locally, please clone the repository and run docker-compose.
+```
+git clone git@github.com:sroy0101/avenue.git
+cd avenue
+docker compose up
+```
+Then add some pre-created users and products to start testing immediately as follows:
+```
+sudo docker run -it avenue_web bash
+Then in the bash terminal run:
+./bin/seed_
+
+```
+
+
+
+## Project Details
 
 ## `backend`
 The `backend` consists of three django apps:
@@ -12,15 +31,15 @@ The `backend` consists of three django apps:
 - `accounts` - an app to create and administer users in django.
 
 ## `frontend`
-To Be Added.
+The `frontend` react app consists of three components, bound together the by the App.js module:
+- `LoginModal` - for displaying the login form, collecting the username and password.
+- `EditModal` - for displaying the product form to create or edit products.
+- `EditImageModal` - for displaying the form adding product images.
 
-## Run avenue using docker
-Clone the repository and run docker-compose.
-```
-git clone git@github.com:sroy0101/avenue.git
-cd avenue
-docker compose up
-```
+The `App.js`
+- Renders the prodcut list along with the product image.
+- Contains all the other supporing functions such as making api calls to the backend for login and adding products or images.
+
 
 
 ## Development Setup
