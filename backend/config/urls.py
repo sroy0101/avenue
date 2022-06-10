@@ -30,6 +30,7 @@ router.register(r"productimages", views.ProductImageView, "productimages")
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("accounts/", include("django.contrib.auth.urls")),
+    path("dj-rest-auth/", include("dj_rest_auth.urls")),
     path("api/", include(router.urls)),
     # Raw Schema
     path("api/schema/", SpectacularAPIView.as_view(), name="schema"),

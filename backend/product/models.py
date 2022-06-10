@@ -1,4 +1,3 @@
-"""All models related to product."""
 import os
 import uuid
 
@@ -32,6 +31,12 @@ class Product(models.Model):
 
     def images(self):
         return ProductImage.objects.filter(product=self)
+
+    def secondary_images(self):
+        cover_image = self.cover()
+        all_images = self.images()
+        secondary_images = [x for x in all_images if x.id != cover_image.id]
+        return secondary_images
 
     def cover(self):
         images = self.images().all()

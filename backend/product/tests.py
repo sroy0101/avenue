@@ -1,3 +1,6 @@
+import os
+import shutil
+
 from django.test import TestCase
 
 from .models import Product, ProductImage
@@ -34,12 +37,18 @@ class productTest(TestCase):
             gender="M",
             active=True,
         )
+        if not os.path.exists("./media/images"):
+            os.makedirs("./media/images")
+        shutil.copy("./product/test_image.jpg", "./media/images/test_image.jpg")
         product_image = ProductImage.objects.create(
-            name="Nike Air", product=product, image="imagefile.jpg", default=False
+            name="Nike Air",
+            product=product,
+            image="images/test_image.jpg",
+            default=False,
         )
         self.assertEqual(product_image.name, "Nike Air")
         self.assertEqual(product_image.product.name, "Nike Air")
-        self.assertEqual(product_image.image.name, "imagefile.jpg")
+        self.assertEqual(product_image.image.name, "images/test_image.jpg")
         self.assertEqual(product_image.default, False)
 
     def test_get_file_path_has_uuid(self):

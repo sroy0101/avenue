@@ -1,46 +1,129 @@
-{% extends "base.html" %}
+{% extends "_base.html" %}
 
 {% block title %}{{ product.name }}{% endblock title %}
 
 {% block content %}
-    <div class="product-detail">
-        <h2>{{ product.name }}</h2>
+<div class="bg-white">
+  <div class="pt-6">
+    <nav aria-label="Breadcrumb">
+      <ol role="list" class="max-w-2xl mx-auto px-4 flex items-center space-x-2 sm:px-6 lg:max-w-7xl lg:px-8">
+        <li>
+          <div class="flex items-center">
+            <a href="{% url 'store' %}" class="mr-2 text-sm font-medium text-gray-900"> All Products </a>
+            <svg width="16" height="20" viewBox="0 0 16 20" fill="currentColor" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" class="w-4 h-5 text-gray-300">
+              <path d="M5.697 4.34L8.98 16.532h1.327L7.025 4.341H5.697z" />
+            </svg>
+          </div>
+        </li>
 
-        <h3>Description:</h3>
-        <p>{{ product.description }}</p>
+        <li class="text-sm">
+          <a href="#" aria-current="page" class="font-medium text-gray-500 hover:text-gray-600"> {{ product.name }} </a>
+        </li>
+      </ol>
+    </nav>
 
-        <h3>SKU</h3>
-        <p>{{ product.sku}}</p>
+    <!-- Image gallery -->
+    {% if product.cover %}
+    <div class="mt-6 max-w-2xl mx-auto sm:px-6 lg:max-w-7xl ">
+      <div class="aspect-w-3 aspect-h-4 rounded-lg overflow-hidden lg:block">
+        <a href="{{ product.cover.image.url }}">
+            <img src="{{ product.cover.get_large_image_url }}" alt="{{ product.cover.image.name }}" class="w-full h-full object-center object-cover">
+        </a>
+      </div>
+    </div>
+    {% endif %}
 
-        <h3>Price</h3>
-        <p>{{ product.price}}</p>
+    <!-- Product info -->
+    <div class="max-w-2xl mx-auto pt-10 pb-16 px-4 sm:px-6 lg:max-w-7xl lg:pt-16 lg:pb-24 lg:px-8 lg:grid lg:grid-cols-3 lg:grid-rows-[auto,auto,1fr] lg:gap-x-8">
+      <div class="lg:col-span-2 lg:border-r lg:border-gray-200 lg:pr-8">
+        <h1 class="text-2xl font-extrabold tracking-tight text-gray-900 sm:text-3xl">{{ product.name }}</h1>
+      </div>
 
-        <h3>Name</h3>
-        <p>{{ product.name}}</p>
+      <!-- Options -->
+      <div class="mt-4 lg:mt-0 lg:row-span-3">
+        <h2 class="sr-only">Product information</h2>
+        <p class="text-3xl text-gray-900">${{ product.price }}</p>
 
-        <h3>Description</h3>
-        <p>{{ product.description}}</p>
+        <div class="mt-10">
+          <h2 class="text-sm font-medium text-gray-900">Gender</h2>
+          <div class="mt-4 space-y-6">
+            <p class="text-sm text-gray-600">{{ product.pretty_gender }}</p>
+          </div>
+        </div>
 
-        <h3>Shipment Time</h3>
-        <p>{{ product.shipment_time}}</p>
+        <div class="mt-10">
+          <h2 class="text-sm font-medium text-gray-900">Shipping Time</h2>
+          <div class="mt-4 space-y-6">
+            <p class="text-sm text-gray-600">{{ product.shipment_time }}</p>
+          </div>
+        </div>
 
-        <h3>Inventory</h3>
-        <p>{{ product.inventory}}</p>
+        <div class="mt-10">
+          <h2 class="text-sm font-medium text-gray-900">Availability</h2>
+          <div class="mt-4 space-y-6">
+            <p class="text-sm text-gray-600">{{ product.inventory }} in stock</p>
+          </div>
+        </div>
 
-        <h3>Gender</h3>
-        <p>{{ product.pretty_gender }}</p>
+        <div class="mt-10">
+          <a
+            href="{% url 'add_to_cart' product.id %}"
+            class="mt-10 w-full bg-sky-500 border border-transparent rounded-md py-3 px-8 flex items-center justify-center text-base font-medium text-white hover:bg-sky-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-sky-400">Add to bag</a>
+        </div>
+      </div>
 
-        {% if product.images %}
-        <div class="aveunue-images">
-            <h3>Image Gallery</h3>
-            {% for image in product.images %}
-            <a href="{{ image.image.url }}">
-                <img style="max-width: 100%;" class="product-image" src="{{image.get_large_image_url}}" alt="{{image.name}}">
-            </a>
-            <p>{{ image.name }}</p>
+      <div class="py-10 lg:pt-6 lg:pb-16 lg:col-start-1 lg:col-span-2 lg:border-r lg:border-gray-200 lg:pr-8">
+        <!-- Description and details -->
+        <div>
+          <h3 class="sr-only">Description</h3>
+          <div class="space-y-6">
+            <p class="text-base text-gray-900">{{ product.description }}</p>
+          </div>
+        </div>
+
+        <div class="mt-12 grid grid-cols-1 gap-y-10 gap-x-6 sm:grid-cols-2 lg:grid-cols-2 xl:gap-x-8">
+            {% for image in product.secondary_images %}
+            <div class="group relative">
+                <div class="w-full min-h-80 bg-gray-200 aspect-w-1 aspect-h-1 rounded-md overflow-hidden group-hover:opacity-75 lg:h-80 lg:aspect-none">
+                    <a href="{{ image.image.url }}">
+                        <img src="{{ image.get_large_image_url }}" alt="{{ image.name }}" class="w-full h-full object-center object-cover lg:w-full lg:h-full">
+                    </a>
+                </div>
+            </div>
             {% endfor %}
         </div>
-        {% endif %}
 
+      </div>
     </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 {% endblock content %}

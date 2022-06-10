@@ -12,7 +12,7 @@ class StorePageTests(TestCase):
     def test_store_template(self):
         self.assertEqual(self.response.status_code, 200)
         self.assertTemplateUsed(self.response, "store.html")
-        self.assertContains(self.response, "Product List")
+        self.assertContains(self.response, "Home")
 
 
 class StoreDetailPageTests(TestCase):

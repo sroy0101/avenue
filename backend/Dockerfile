@@ -7,6 +7,8 @@ ENV PYTHONUNBUFFERED 1
 # Set work directory
 WORKDIR /code
 # Install dependencies
+RUN apt-get update
+RUN apt-get install -y libmagickwand-dev
 COPY ./requirements.txt .
 RUN pip install -r requirements.txt
 # Copy project
