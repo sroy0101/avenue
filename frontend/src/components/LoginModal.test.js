@@ -13,7 +13,7 @@ it("renders the login form", () => {
 
   expect(screen.getByLabelText('Username').id).toBe('username');
   expect(screen.getByLabelText('Password').id).toBe('password');
-  expect(screen.getByText('Save').type).toBe('button');
+  expect(screen.getByRole('button', {name: /Login/i}).type).toBe('submit');
 
 });
 
@@ -21,7 +21,7 @@ it("calls the event handler on save", () => {
   render(
     <LoginModal toggle={toggleLoginModal} onSave={handleLogin}/>
   )
-  const save_button = screen.getByText('Save');
+  const save_button = screen.getByRole('button', {name: /Login/i});
   fireEvent.click(save_button);
   expect(handleLogin).toHaveBeenCalledTimes(1);
 });

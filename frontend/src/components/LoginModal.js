@@ -21,7 +21,6 @@ import {
             username: "",
             password: "",
         };
-        console.log(props)
     }
     handleChange = (e) => {
        let {name, value} = e.target;
@@ -54,7 +53,7 @@ import {
                             ></Input>
                         </FormGroup>
                         <FormGroup>
-                            <Label for="password">Price</Label>
+                            <Label for="password">Password</Label>
                             <Input
                                 type="password"
                                 id="password"

@@ -27,10 +27,8 @@ export default class EditModal extends Component {
         if(e.target.type === "checkbox") {
             value = e.target.checked;
         }
-        console.log(`${name} ${value}`)
         const activeItem = { ...this.state.activeItem, [name]: value };
         this.setState({activeItem: activeItem})
-        console.log(this.state.activeItem)
     };
     render() {
         const {toggle, onSave} = this.props;

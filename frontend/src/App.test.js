@@ -3,6 +3,6 @@ import App from './App';
 
 test('renders the login modal', () => {
   render(<App />);
-  const linkElement = screen.getByText(/Login/i);
+  const linkElement = screen.getByRole('button', {name: /Login/i});
   expect(linkElement).toBeInTheDocument();
 });

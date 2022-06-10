@@ -59,7 +59,6 @@ class App extends Component {
     return this.state.loginRetry;
   }
   handleLogin = (username, password) => {
-    // console.log(username, password)
     if (username && password) {
       let formData = new FormData()
       formData.append("username", username)
@@ -81,7 +80,6 @@ class App extends Component {
         })
         .catch((err) => {
           window.alert("Login failed. Please try again.")
-          console.log(err)
         })
     }
   };
@@ -89,7 +87,6 @@ class App extends Component {
     API
       .get("/api/products/")
       .then((res) => {
-        debugger;
         this.setState({ productList: res.data })
       })
       .catch((err) => this.process_refresh_error(err))
@@ -100,15 +97,13 @@ class App extends Component {
 
   };
   process_refresh_error = (err) => {
-    if (err.response && err.response.status == 403) {
+    if (err.response && err.response.status === 403) {
       window.alert("Insufficient permissions. Please log in with a user belonging to the Merchandiser group.")
       window.location.reload()
     }
-    if (err.response && err.response.status == 404) {
+    if (err.response && err.response.status === 404) {
       this.setState({ productList: [] });
     }
-    console.log(err);
-    console.log(err.response.status);
   }
   toggleEditModal = () => {
     this.setState({ editModal: !this.state.editModal })
@@ -118,7 +113,6 @@ class App extends Component {
   };
   handleSubmit = (item) => {
     this.toggleEditModal();
-    console.log(item)
     if (item.id) {
       API
         .put(`/api/products/${item.id}/`, item)
@@ -146,7 +140,7 @@ class App extends Component {
       .delete(`/api/products/${item.id}/`)
       .then((res) => this.refreshList())
       .catch((err) => {
-        if (err.response && err.response.status == 404) {
+        if (err.response && err.response.status === 404) {
           this.refreshList();
         }
       })
@@ -156,7 +150,7 @@ class App extends Component {
       .delete(`/api/productimages/${productImage.id}`)
       .then((res) => this.refreshList())
       .catch((err) => {
-        if (err.response && err.response.status == 404) {
+        if (err.response && err.response.status === 404) {
           this.refreshList();
         }
       })
@@ -181,7 +175,6 @@ class App extends Component {
     })
   };
   addImage = (product) => {
-    console.log()
     const image = {
       name: "",
       product: product.id,
@@ -204,6 +197,11 @@ class App extends Component {
     let small_url = parts.slice(0, -1) + "_small." + parts.pop()
     return small_url;
   };
+
+  /**
+   * Render the product and images from the product list.
+   * @returns rendered html doc.
+   */
   renderItems = () => {
     const newItems = this.state.productList
     return newItems.map((item) => (
@@ -236,7 +234,7 @@ class App extends Component {
             <div key={productImage.id} className="d-inline-block relative rounded pr-3 mb-1 productImagePreview">
               <img alt={productImage.name} className="block rounded w-100" src={this.get_small_img_url(productImage.image)}/>
               <div>
-                <a className="text-danger cursor-pointer" onClick={() => this.handleProductImageDelete(productImage)}>Delete</a>
+                <button className="btn btn-danger mt-1" onClick={() => this.handleProductImageDelete(productImage)}>Delete</button>
               </div>
             </div>
           ))}
@@ -247,11 +245,15 @@ class App extends Component {
               onClick={() => this.addImage(item)}
             >Add Image
             </button>
-
         </div>
       </li>
     ));
   }
+  /**
+   * Render the login or the product modal components based on the current state,
+   * to collect related fields, make api calls and refresh the page based on the call response and results.
+   * @returns a fully rendered html doc.
+   */
   render() {
     return (
       <main className="container">

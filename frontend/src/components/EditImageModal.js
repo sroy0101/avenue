@@ -11,6 +11,9 @@ import {
     Label,
 } from "reactstrap";
 
+/**
+ * Display a modal to add an image.
+ */
 export default class EditImageModal extends Component {
     constructor(props) {
         super(props);

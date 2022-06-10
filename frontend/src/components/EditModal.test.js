@@ -28,7 +28,7 @@ it("renders the product edit form", () => {
   expect(screen.getByLabelText('Shipment Time').type).toBe('text');
   expect(screen.getByLabelText('Inventory').type).toBe('number');
   expect(screen.getByLabelText('Gender').type).toBe('select-one');
-  expect(screen.getByText('Save').type).toBe('button');
+  expect(screen.getByText('Save').type).toBe('submit');
 
 });
 

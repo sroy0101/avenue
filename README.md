@@ -1,110 +1,137 @@
 # avenue
 
-### A sample e-commerce application
+**A sample e-commerce application**
 
 This application consists of two projects - `backend` and `fronend`.
-The backend is built on [django](https://docs.djangoproject.com/en/4.0/) and the frontend is built using [React](https://create-react-app.dev/).
+The backend is built on [Django](https://docs.djangoproject.com/en/4.0/) and the frontend is built using [React](https://create-react-app.dev/).
 
-## Try avenue
-**avenue** is packaged as a docker container. To run it locally, please clone the repository and run docker-compose as follows:
+<br/>
+
+# Quickstart
+**avenue** is packaged as a Docker container. To run it locally, please clone the repository and run docker-compose as follows:
+
 ```
 git clone git@github.com:sroy0101/avenue.git
 cd avenue
 docker compose up
 ```
-Then add some pre-created users, products and images to start testing immediately as follows:
+
+Next, add some seed data -- pre-created users, products and images -- to start testing immediately:
+
 ```
-sudo docker exec -it avenue-web1 bash
-Then in the bash terminal run:
+# Start bash in the avenue backend container
+docker exec -it web bash
+
+# Run the data importer
 ./bin/seed_db
 ```
-Open `localhost:8000` to see the store with available products.
---
+
+Finally, open `localhost:8000` to see the store with available products.
+
 
 **See all seed data user login credentials at the end of this document.**
 
-----
 <br/>
-<img src="./readme_media/avenue_store.png" alt="avanue store">
-<img src="./readme_media/avenue_store_details.png" alt="avanue store">
+
+# Screenshots
+
+<br/>
+
+## Store home page
+<img src="./readme_media/avenue_store.png" alt="avenue store">
+
+## Product Listing
+<img src="./readme_media/avenue_store_details.png" alt="avenue store details">
+
+## Product Editing
+<img src="./readme_media/avenue_product_edit.png" alt="avenue product edit">
 
 
-
-<br/><br/>
 # Project Details
 
-### Backend
-The `backend` consists of three django apps:
-- `product` - an app to allow merhandizers to crate products and upload product images. It provides the REST api endpoint used by the `frontend`.
-- `store` - an app to allow store customers to view the products and add selected products to a cart. The frontend for this app uses django templates for better SEO.
-- `accounts` - an app to create and administer users in django.
+## Backend
 
-### Frontend
-The `frontend` react app consists of three components, bound together the by the App.js module:
+The `backend` consists of three Django apps:
+- `product` - an app to allow merhandizers to crate products and upload product images. It provides the REST api endpoint used by the `frontend`.
+- `store` - an app to allow store customers to view the products and add selected products to a cart. The frontend for this app uses Django templates for better SEO.
+- `accounts` - an app to create and administer users in Django.
+
+## Frontend
+
+The `frontend` React app consists of three components, bound together the by the App.js module:
 - `LoginModal` - for displaying the login form, collecting the username and password.
 - `EditModal` - for displaying the product form to create or edit products.
 - `EditImageModal` - for displaying the form adding product images.
 
-The `App.js`
-- Renders the prodcut list along with the product images.
+`App.js`
+- Renders the product list along with the product images.
 - Contains all the other supporing functions such as making api calls to the backend for login and adding or deleting products or images.
 
 
 <br/><br/>
-# Development Setup
 
-### Backend
+# Development Setup
+<br/>
+
+## Backend
+
 1. Clone the `avenue` git repo from Github in your project folder.
+
 ```
 git clone git@github.com:sroy0101/avenue.git
 ```
 
 2. Create and activate python virtual env.
-(Requires [Python 3](https://www.python.org/downloads/) to be already installed on your system.)
+(Requires [Python 3.7+](https://www.python.org/downloads/) to be already installed on your system.)
+
 ```
 cd avenue
 python -m venv venv
 source venv/bin/activate
 ```
 
-3. Add this to your .bashrc or .profile file and open a new terminal (For Mac or Linux)
-```
-export PYENV_ROOT="$HOME/.pyenv"
-export PATH="$PYENV_ROOT/shims:$PATH"
-if command -v pyenv 1>/dev/null 2>&1; then
-                eval "$(pyenv init -)"
-fi
-```
+3. Install python packages
 
-4. Install python packages
 ```
 cd backend
 pip install -r requirements.txt
+
 ```
-5. Install ImageMagic
+
+4. Install ImageMagic
+
 ```
 apt-get install libmagickwand-dev
 ```
-6. Run tests
+
+5. Run tests
+
 ```
 ./bin/runtests
 ```
-7. Run migration to create the sqlite database (db.sqlite3):
+
+6. Run migration to create the sqlite database (db.sqlite3):
+
 ```
 python manage.py migrate
 ```
-8. Run backend
+
+7. Run backend
+
 ```
-./manage.py runserver
+python manage.py runserver
 ```
 
-**The backend should now be running**.
+**The backend Django server should now be running**.
 
-Open web browser on `localhost:8000/api/schema/swagger-ui` to see the product and product image api schema.
+Go to `localhost:8000/api/schema/swagger-ui` to see the `Product` and `ProductImage` API schema.
 
-Since trying the API from `swagger-ui` requires user authentication, see below for creating users.
+Note: Trying the API from the `swagger-ui` interface requires user authentication (see below for how to create users).
 
-### Seed data for a quick start
+<br/>
+
+## Seed data for a quick start
+
 1. Load the seed data.
 ```
 cd backend
@@ -116,13 +143,18 @@ cd backend
 
 **See all seed data user login credentials below. **
 
-<br/><br/>
-### Create users and products manually
+<br/>
+
+## Create users and products manually
+
 1. Add a superuser (make sure application is running)
 ```
 cd backend
 python manage.py createsuperuser
-... then follow the prompts.
+```
+
+You'll then be prompted to create your username and password
+```
 Username: <superuser name>
 Email address: XXX@example.com
 Password:
@@ -138,7 +170,7 @@ Superuser created successfully.
 
 <br/>
 
-### Frontend
+## Frontend
 
 1. Install node packages
 ```
@@ -149,12 +181,13 @@ npm install
 ```
 npm start
 ```
-3. Open `localhost:3000` on the web browser and login as the mershandiser user to add products and images.
----
+3. Open `localhost:3000` on the web browser and login as the merchandiser user to add products and images.
+<br/>
 <br/>
 
 ## Seed Data Login Details
-1. Superuser -  `superuser / su@@1234`
-2. Merchandiser - `product_manager / pypy!1234`
-3. customer - `customer / pypy!1234`
-4. customer (with no cc data) - `customer_no_cc / pypy!1234`
+
+* Superuser -  `superuser / su@@1234`
+* Merchandiser - `product_manager / pypy!1234`
+* customer - `customer / pypy!1234`
+* customer (with no cc data) - `customer_no_cc / pypy!1234`

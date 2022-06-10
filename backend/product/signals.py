@@ -39,5 +39,5 @@ def resize_image(image: WandImage, width: int, height: int) -> WandImage:
 
 @receiver(post_delete, sender=ProductImage)
 def image_deleted(sender, instance, *args, **kwargs):
-    print(instance)
-    # ToDo Delete the Image files.
+    # ToDo Delete the Image files from the media store
+    pass
