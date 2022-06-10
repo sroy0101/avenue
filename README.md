@@ -21,19 +21,21 @@ Then in the bash terminal run:
 Open `localhost:8000` to see the store with available products.
 --
 
+**See all seed data user login credentials at the end of this document.**
 
-[store image]
+----
+<br/>
+<img src="./readme_media/avenue_store.png" alt="avanue store">
+<img src="./readme_media/avenue_store_details.png" alt="avanue store">
 
-<img src="" alt="avanue store">
 
-[Product and product images]
 
 <br/><br/>
 # Project Details
 
 ### Backend
 The `backend` consists of three django apps:
-- `product` - an app to allow merhandizers to crate products and upload product images. It provides the REST api ensdpoint used by the `frontend`.
+- `product` - an app to allow merhandizers to crate products and upload product images. It provides the REST api endpoint used by the `frontend`.
 - `store` - an app to allow store customers to view the products and add selected products to a cart. The frontend for this app uses django templates for better SEO.
 - `accounts` - an app to create and administer users in django.
 
@@ -44,8 +46,8 @@ The `frontend` react app consists of three components, bound together the by the
 - `EditImageModal` - for displaying the form adding product images.
 
 The `App.js`
-- Renders the prodcut list along with the product image.
-- Contains all the other supporing functions such as making api calls to the backend for login and adding products or images.
+- Renders the prodcut list along with the product images.
+- Contains all the other supporing functions such as making api calls to the backend for login and adding or deleting products or images.
 
 
 <br/><br/>
@@ -57,7 +59,8 @@ The `App.js`
 git clone git@github.com:sroy0101/avenue.git
 ```
 
-2. Create and activate python virtual env
+2. Create and activate python virtual env.
+(Requires [Python 3](https://www.python.org/downloads/) to be already installed on your system.)
 ```
 cd avenue
 python -m venv venv
@@ -97,21 +100,23 @@ python manage.py migrate
 
 **The backend should now be running**.
 
-Open web browser on `localhost:8000/api/schema/swagger-ui` to see the product and product image api schema. Since trying the API from `swagger-ui` requires user authentication, see below for creating  users.
+Open web browser on `localhost:8000/api/schema/swagger-ui` to see the product and product image api schema.
 
-### Jump start user and product configuration
+Since trying the API from `swagger-ui` requires user authentication, see below for creating users.
+
+### Seed data for a quick start
 1. Load the seed data.
 ```
 cd backend
 ./bin/seed_data
 ```
 2. Login as super-admin on `localhost:8000/admin` to chek the othe user and the list of products.
-```
-Username: `superadmin` / Password: `sup@@@123`
-```
 3. Open `localhost:8000` in web browser to see the users, product list and images.
 4. Login via `localhost:3000` in web browser to see product list and images.
 
+**See all seed data user login credentials below. **
+
+<br/><br/>
 ### Create users and products manually
 1. Add a superuser (make sure application is running)
 ```
@@ -131,6 +136,8 @@ Superuser created successfully.
 4. Open `localhost:8000/api/schema/swagger-ui` to see the list of API's.
 5. Open `localhost:8000` to see available products.
 
+<br/>
+
 ### Frontend
 
 1. Install node packages
@@ -142,5 +149,12 @@ npm install
 ```
 npm start
 ```
-3. Open `localhost:3000` on the web browser and login as product manager to add products and images.
+3. Open `localhost:3000` on the web browser and login as the mershandiser user to add products and images.
+---
+<br/>
 
+## Seed Data Login Details
+1. Superuser -  `superuser / su@@1234`
+2. Merchandiser - `product_manager / pypy!1234`
+3. customer - `customer / pypy!1234`
+4. customer (with no cc data) - `customer_no_cc / pypy!1234`
