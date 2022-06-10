@@ -2,4 +2,4 @@
 
 # Extract media file
 tar -xzf media.tar.gz
-python manage.py loaddata avenue_seed_file.json
+python manage.py loaddata fixture/avenue_seed.json

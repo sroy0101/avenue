@@ -14,11 +14,13 @@ docker compose up
 ```
 Then add some pre-created users, products and images to start testing immediately as follows:
 ```
-sudo docker exec -it avenue_web bash
+sudo docker exec -it avenue-web1 bash
 Then in the bash terminal run:
 ./bin/seed_db
 ```
-Open `localhost:8000` to see the store with products and images.
+Open `localhost:8000` to see the store with available products.
+--
+
 
 [store image]
 
