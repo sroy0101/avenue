@@ -6,31 +6,36 @@ This application consists of two projects - `backend` and `fronend`.
 The backend is built on [django](https://docs.djangoproject.com/en/4.0/) and the frontend is built using [React](https://create-react-app.dev/).
 
 ## Try avenue
-**avenue** is packaged as a docker app. To run it locally, please clone the repository and run docker-compose.
+**avenue** is packaged as a docker container. To run it locally, please clone the repository and run docker-compose as follows:
 ```
 git clone git@github.com:sroy0101/avenue.git
 cd avenue
 docker compose up
 ```
-Then add some pre-created users and products to start testing immediately as follows:
+Then add some pre-created users, products and images to start testing immediately as follows:
 ```
-sudo docker run -it avenue_web bash
+sudo docker exec -it avenue_web bash
 Then in the bash terminal run:
-./bin/seed_
-
+./bin/seed_db
 ```
+Open `localhost:8000` to see the store with products and images.
 
+[store image]
 
+<img src="" alt="avanue store">
 
-## Project Details
+[Product and product images]
 
-## `backend`
+<br/><br/>
+# Project Details
+
+### Backend
 The `backend` consists of three django apps:
 - `product` - an app to allow merhandizers to crate products and upload product images. It provides the REST api ensdpoint used by the `frontend`.
 - `store` - an app to allow store customers to view the products and add selected products to a cart. The frontend for this app uses django templates for better SEO.
 - `accounts` - an app to create and administer users in django.
 
-## `frontend`
+### Frontend
 The `frontend` react app consists of three components, bound together the by the App.js module:
 - `LoginModal` - for displaying the login form, collecting the username and password.
 - `EditModal` - for displaying the product form to create or edit products.
@@ -41,10 +46,10 @@ The `App.js`
 - Contains all the other supporing functions such as making api calls to the backend for login and adding products or images.
 
 
+<br/><br/>
+# Development Setup
 
-## Development Setup
-
-### backend
+### Backend
 1. Clone the `avenue` git repo from Github in your project folder.
 ```
 git clone git@github.com:sroy0101/avenue.git
@@ -66,28 +71,46 @@ if command -v pyenv 1>/dev/null 2>&1; then
 fi
 ```
 
-5. Install python packages
+4. Install python packages
 ```
 cd backend
 pip install -r requirements.txt
 ```
-
-4. Run tests
+5. Install ImageMagic
+```
+apt-get install libmagickwand-dev
+```
+6. Run tests
 ```
 ./bin/runtests
 ```
-
-5. Run backend manually
+7. Run migration to create the sqlite database (db.sqlite3):
+```
+python manage.py migrate
+```
+8. Run backend
 ```
 ./manage.py runserver
 ```
 
-The application should be running.
+**The backend should now be running**.
 
 Open web browser on `localhost:8000/api/schema/swagger-ui` to see the product and product image api schema. Since trying the API from `swagger-ui` requires user authentication, see below for creating  users.
 
-### Create Users
+### Jump start user and product configuration
+1. Load the seed data.
+```
+cd backend
+./bin/seed_data
+```
+2. Login as super-admin on `localhost:8000/admin` to chek the othe user and the list of products.
+```
+Username: `superadmin` / Password: `sup@@@123`
+```
+3. Open `localhost:8000` in web browser to see the users, product list and images.
+4. Login via `localhost:3000` in web browser to see product list and images.
 
+### Create users and products manually
 1. Add a superuser (make sure application is running)
 ```
 cd backend
@@ -99,19 +122,23 @@ Password:
 Password (again):
 Superuser created successfully.
 ```
-2. Open `localhost:8000/admin` on your browser and login as superuser.
+2. Open `localhost:8000/admin` on the web browser and login as superuser.
 3. Create new users using admin UI.
+   - Add a user and assign the user to a group called `Merchandiser`.
+   - Add another user as a customer who will make purchases at the store.
+4. Open `localhost:8000/api/schema/swagger-ui` to see the list of API's.
+5. Open `localhost:8000` to see available products.
 
-TODO - Add More Details
-
-
-### frontend
+### Frontend
 
 1. Install node packages
 ```
 cd frontend
 npm install
 ```
-2.
-
+2. Run the app
+```
+npm start
+```
+3. Open `localhost:3000` on the web browser and login as product manager to add products and images.
 
