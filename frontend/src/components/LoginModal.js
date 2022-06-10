@@ -68,7 +68,7 @@ import {
                 </ModalBody>
                 <ModalFooter>
                     <Button
-                        color="success"
+                        type="submit" color="success"
                         onClick={() => onSave(this.state.username, this.state.password)}
                     >Login</Button>
                 </ModalFooter>

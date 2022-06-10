@@ -74,7 +74,7 @@ export default class EditImageModal extends Component {
                 </ModalBody>
                 <ModalFooter>
                     <Button
-                        color="success"
+                        type="submit" color="success"
                         onClick={() => onSave(this.state.activeImage)}
                     >Save</Button>
                 </ModalFooter>

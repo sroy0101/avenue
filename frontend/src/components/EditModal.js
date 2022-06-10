@@ -135,7 +135,7 @@ export default class EditModal extends Component {
                 </ModalBody>
                 <ModalFooter>
                     <Button
-                        color="success"
+                        type="submit" color="success"
                         onClick={() => onSave(this.state.activeItem)}
                     >Save</Button>
                 </ModalFooter>
