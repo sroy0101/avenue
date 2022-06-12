@@ -1,3 +1,4 @@
+'use strict'
 import React, { Component } from "react";
 import EditModal from "./components/EditModal";
 import LoginModal from "./components/LoginModal";
@@ -256,46 +257,48 @@ class App extends Component {
    */
   render() {
     return (
-      <main className="container">
-        <h1 className="text-white text-uppercase text-center my-4">Product Manager</h1>
-        <div className="row">
-          <div className="col-md-8 col-sm-10 mx-auto p-0">
-            <div className="card p-3">
-              <div className="mb-4">
-                <button
-                  className="btn btn-primary"
-                  onClick={this.createItem}
-                >Add product</button>
+      <React.StrictMode>
+        <main className="container">
+          <h1 className="text-white text-uppercase text-center my-4">Product Manager</h1>
+          <div className="row">
+            <div className="col-md-8 col-sm-10 mx-auto p-0">
+              <div className="card p-3">
+                <div className="mb-4">
+                  <button
+                    className="btn btn-primary"
+                    onClick={this.createItem}
+                  >Add product</button>
+                </div>
+                <ul className="list-group list-group-flush border-top-0">
+                  {this.renderItems()}
+                </ul>
               </div>
-              <ul className="list-group list-group-flush border-top-0">
-                {this.renderItems()}
-              </ul>
             </div>
           </div>
-        </div>
-        {this.state.editModal ? (
-          <EditModal
-            activeItem={this.state.activeItem}
-            toggle={this.toggleEditModal}
-            onSave={this.handleSubmit}
-          >
-          </EditModal>
-        ) : null }
-        { this.state.editImageModal ? (
-          <EditImageModal
-            activeImage={this.state.activeImage}
-            toggle={this.toggleImageEditModal}
-            onSave={this.handleImageSubmit}
-          ></EditImageModal>
-        ): null }
-        { this.state.loginModal ? (
-          <LoginModal
-          toggle={this.toggleLoginModal}
-          onSave={this.handleLogin}
-          >
-          </LoginModal>
+          {this.state.editModal ? (
+            <EditModal
+              activeItem={this.state.activeItem}
+              toggle={this.toggleEditModal}
+              onSave={this.handleSubmit}
+            >
+            </EditModal>
           ) : null }
-      </main>
+          { this.state.editImageModal ? (
+            <EditImageModal
+              activeImage={this.state.activeImage}
+              toggle={this.toggleImageEditModal}
+              onSave={this.handleImageSubmit}
+            ></EditImageModal>
+          ): null }
+          { this.state.loginModal ? (
+            <LoginModal
+            toggle={this.toggleLoginModal}
+            onSave={this.handleLogin}
+            >
+            </LoginModal>
+            ) : null }
+        </main>
+      </React.StrictMode>
     );
   }
 }

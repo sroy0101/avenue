@@ -191,3 +191,13 @@ npm start
 * Merchandiser - `product_manager / pypy!1234`
 * customer - `customer / pypy!1234`
 * customer (with no cc data) - `customer_no_cc / pypy!1234`
+<br/>
+<br/>
+
+## Future Functionailities
+
+- Moving media files to S3 with use of Localstack for testing.
+- End-to-end testing using Cypress testing framework.
+- Continuous integration and deployment (CI/CD) pipelines.
+- Deployment to kubernetes.
+-
