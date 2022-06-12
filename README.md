@@ -194,10 +194,10 @@ npm start
 <br/>
 <br/>
 
-## Future Functionailities
+## Future Functionaility
 
-- Moving media files to S3 with use of Localstack for testing.
+- Moving media files to S3/Cloudfront with the use of Localstack for testing.
 - End-to-end testing using Cypress testing framework.
 - Continuous integration and deployment (CI/CD) pipelines.
-- Deployment to kubernetes.
+- Deployment to K8s.
 -

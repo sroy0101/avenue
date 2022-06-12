@@ -15,3 +15,5 @@ services:
     volumes:
       - .:/frontend
     network_mode: container:web
+    depends_on:
+      - web
