@@ -200,7 +200,7 @@ class App extends Component {
 
   /**
    * Render the product and images from the product list.
-   * @returns rendered html doc.
+   * @returns a React element for rendering by React.
    */
   renderItems = () => {
     const newItems = this.state.productList
@@ -252,7 +252,7 @@ class App extends Component {
   /**
    * Render the login or the product modal components based on the current state,
    * to collect related fields, make api calls and refresh the page based on the call response and results.
-   * @returns a fully rendered html doc.
+   * @returns a React element for rendering by React.
    */
   render() {
     return (
