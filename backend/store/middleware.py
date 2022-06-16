@@ -1,17 +1,18 @@
 from .models import Cart
 
-"""
-Create a cart for the user.
-
-
-"""
-
 
 class CartMiddleware:
     def __init__(self, get_response):
         self.get_response = get_response
 
     def __call__(self, request):
+        """Create a cart for the user.
+
+        If there is an existing cart, either of the user (if the user is authenticated) or the session, add it to the request.
+        Otherwise, create a new cart and add it to the request.
+        The request is used by the CartView to create the context for the template.
+
+        """
         session_key = request.session._get_or_create_session_key()
 
         # Is there already a cart for this user?

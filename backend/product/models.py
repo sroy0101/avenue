@@ -33,12 +33,17 @@ class Product(models.Model):
         return ProductImage.objects.filter(product=self)
 
     def secondary_images(self):
+        """Select all images except the cover."""
         cover_image = self.cover()
         all_images = self.images()
         secondary_images = [x for x in all_images if x.id != cover_image.id]
         return secondary_images
 
     def cover(self):
+        """Select the primary image for the product.
+
+        Select the image marked as default or if not available selects the first one.
+        """
         images = self.images().all()
         cover = next((x for x in images if x.default), None)
         if not cover and len(images) > 0:
