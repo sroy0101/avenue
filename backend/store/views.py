@@ -23,6 +23,12 @@ class StoreDetailView(DetailView):
 
 
 class CartView(TemplateView):
+    """Override the base get_data_context() to add the cart and cart items to the context.
+
+    A templateview renders a given template with the context containing the
+    parameters captured in the url (i.e the request).
+    """
+
     template_name: str = "cart.html"
 
     def get_context_data(self, **kwargs: Any) -> Dict[str, Any]:
@@ -33,6 +39,12 @@ class CartView(TemplateView):
 
 
 class AddToCartView(View):
+    """Add user selected product to cart.
+
+    If the product is already in the cart increments the count.
+    Returns the Http redirect response to the cart.
+    """
+
     def get(self, request, product_id):
         product = Product.objects.filter(id=product_id).first()
         if product:
@@ -50,6 +62,17 @@ class AddToCartView(View):
 
 
 class CheckoutView(LoginRequiredMixin, View):
+    """Return rendering of checkout success or failure page.
+
+    Return success page if user is authenticated, and the shipping address,
+    billing address and the credit card information is available. Otherwise,
+    returns the checkout failure page.
+
+    If the user is not authenticated, the LoginRequiredMixin displays the
+    login page and returns here after successful login.
+
+    """
+
     def get(self, request):
         if (
             request.user.is_authenticated
