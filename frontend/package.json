@@ -20,7 +20,10 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "linters": "eslint './src/**/*.{js,jsx}' './tests/**/*.{js,jsx}'"
+    "linters": "eslint './src/**/*.{js,jsx}' './tests/**/*.{js,jsx}'",
+    "e2e": "cypress run",
+    "e2e-ui": "cypress open",
+    "clr-cache": "cypress cache clear"
   },
   "eslintConfig": {
     "extends": [
@@ -46,5 +49,9 @@
     "jest-styled-components": "^7.0.3",
     "prettier": "^2.1.2",
     "react-test-renderer": "^17.0.1"
+  },
+  "devDependencies": {
+    "cypress": "^10.1.0",
+    "cypress-file-upload": "^5.0.8"
   }
 }

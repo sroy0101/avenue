@@ -171,4 +171,6 @@ AUTH_USER_MODEL = "accounts.CustomUser"
 LOGIN_REDIRECT_URL = "store"
 LOGOUT_REDIRECT_URL = "store"
 
-CORS_ORIGIN_WHITELIST = ("http://localhost:3000",)
+CORS_ORIGIN_WHITELIST = ["http://localhost:3000",]
+
+
