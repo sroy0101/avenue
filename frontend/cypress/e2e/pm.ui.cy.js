@@ -2,7 +2,6 @@
 import 'cypress-file-upload';
 
 describe('Test product manager UI', () => {
-  // This
   it('opens the login modal', () => {
     cy.visit('http://localhost:3000')
     cy.get('.modal-dialog button').contains('Login').should('be.visible')
@@ -10,7 +9,6 @@ describe('Test product manager UI', () => {
   })
 
   it('allows the product manager to login', () => {
-    // cy.visit('http://localhost:3000')
     const username = Cypress.config('testUserName')
     const password = Cypress.config('testuserPassword')
     cy.get('.modal-dialog #username').type(username).should('have.value', username)
