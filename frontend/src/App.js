@@ -266,7 +266,7 @@ class App extends Component {
                   <button
                     className="btn btn-primary"
                     onClick={this.createItem}
-                  >Add product</button>
+                  >Add Product</button>
                 </div>
                 <ul className="list-group list-group-flush border-top-0">
                   {this.renderItems()}

@@ -28,6 +28,17 @@ docker exec -it web bash
 
 Finally, open `localhost:8000` to see the store with available products.
 
+If the docker compose was run previously, try:
+```
+#stop the running docker compose
+cntrl-c
+# remove all prebuilt images
+docker compose down --rmi all
+# start again with --build
+docker compose up --build
+
+# When it is up and running, seed the database as mentioned above.
+```
 
 **See all seed data user login credentials at the end of this document.**
 
@@ -184,6 +195,36 @@ npm start
 3. Open `localhost:3000` on the web browser and login as the merchandiser user to add products and images.
 <br/>
 <br/>
+
+## E2E Testing with Cypress
+End-to-end tests are available using [Cypress](https://docs.cypress.io/guides/overview/why-cypress#What-you-ll-learn).
+
+All the cypress tests are in the cypress folder.
+
+Two types of tests are available - with and without UI.
+
+### Without UI
+```
+cd frontend
+npm run e2e
+```
+
+### With UI
+Use - `cd frontend; npm run e2e-ui` and then from the opened UI:
+1. Select testing type `E2E tests`.
+2. Select the web browser, example Chrome or Electron.
+3. Select `Specs`from the menus on the left.
+4. Select the test to run. To rerun use `r`.
+5. The test will login as product manager, add a product, and then add a image to the product.
+
+### Sample screenshot for test with UI
+<img src="./readme_media/cypress_e2e_ui.png" alt="E2E Tests">
+<br/>
+<br/>
+
+### Notes
+Detail notes for running cypress in Windows WSL2 environment is provided in the README file in the cypress folder.
+
 
 ## Seed Data Login Details
 
