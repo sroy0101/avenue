@@ -8,7 +8,10 @@ The backend is built on [Django](https://docs.djangoproject.com/en/4.0/) and the
 <br/>
 
 # Quickstart
-**avenue** can be run locally with `docker` and `docker compose`. Please clone the repository and run `docker compose` as follows:
+**avenue** can be run locally with `docker` and `docker compose`.
+
+The instructions below are for Ubuntu 20.04+ hosts (standalone or running under Windows WSL2). Please clone the repository and run `docker compose` as follows:
+
 
 ```
 git clone git@github.com:sroy0101/avenue.git
