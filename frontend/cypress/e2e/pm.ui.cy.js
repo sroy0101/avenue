@@ -63,6 +63,7 @@ describe('Test product manager UI', () => {
     cy.get('.modal-dialog .modal-body .form-group').last().find('label').contains('Image').should('be.visible')
     cy.get('.modal-dialog .modal-body .form-group').last().find('input[type=file]').attachFile('camaro.png')
     cy.wait(1000)
+
     cy.get('.modal-dialog .modal-footer .btn.btn-success').contains('Save').should('be.visible')
     cy.get('.modal-dialog .modal-footer .btn.btn-success').contains('Save').click({force: true})
     // Add this delay to allow the new product list to be displayed.
@@ -70,15 +71,46 @@ describe('Test product manager UI', () => {
 
   })
 
-  it('allows the product manager to delete the image just added', () => {
+
+  it('checks the product appears in the store', () => {
+    cy.visit('http://localhost:8000')
+    // is the product in the store?
+    cy.get('.group.relative').last().contains('Camaro').should('be.visible')
+    cy.get('.group.relative').last().find('p').contains('Women').should('be.visible')
+    cy.get('.group.relative').last().find('p').contains('$12300.45').should('be.visible')
+  })
+
+  it('check the product details is shown when clicked', () => {
+    cy.get('.group.relative').last().contains('Camaro').click({force:true})
+    cy.wait(2000)
+    // Check the large image is there
+    cy.get('.aspect-w-3 a img').should('have.attr', 'src').should('include', 'camaro').should('include', 'large.png')
+    cy.get('h1').contains('Camaro').should('be.visible')
+    cy.get('h2').contains('Product information').should('be.visible')
+    cy.get('p.text-3xl.text-gray-900').contains('$12300.45').should('be.visible')
+    cy.get('a').contains('Add to bag').should('be.visible').click({force: true})
+  })
+
+  it('check that the shopper can proceed to checkout', () => {
+    cy.get('a').contains('Checkout').should('be.visible').click({force: true})
+    cy.wait(2000)
+
+  })
+
+  it('allows the product manager to delete the product and the image added for the test', () => {
+    cy.visit('http://localhost:3000')
+    cy.get('.modal-dialog button').contains('Login').should('be.visible')
+    cy.get('.modal-dialog label').contains('Username').should('be.visible')
+
+    const username = Cypress.config('testUserName')
+    const password = Cypress.config('testuserPassword')
+    cy.get('.modal-dialog #username').type(username).should('have.value', username)
+    cy.get('.modal-dialog #password').type(password).should('have.value', password)
+    cy.get('.modal-dialog  .btn.btn-success').contains('Login').click({force:true})
+
     cy.get('.container .row .list-group-item').last().find('.btn.btn-danger').first().contains('Delete').should('be.visible')
     cy.get('.container .row .list-group-item').last().find('.productImagePreview .btn.btn-danger').first().contains('Delete').click({force:true})
 
-    // Add this delay to allow the new product list to be displayed.
-    cy.wait(2000)
-  })
-
-  it('allows the product manager to delete the product just added', () => {
     cy.get('.container .row .list-group-item').last().find('.btn.btn-danger').contains('Delete').should('be.visible')
     cy.get('.container .row .list-group-item').last().find('.btn.btn-danger').contains('Delete').click({force:true})
 
