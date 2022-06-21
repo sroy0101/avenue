@@ -9,6 +9,13 @@ from .models import ProductImage
 
 @receiver(post_save, sender=ProductImage)
 def image_uploaded(sender, instance, *args, **kwargs):
+    """Process the notification for post action for productImage.
+
+    Create and store three sizes of the image using the Wand image editing library -
+    large, medium and small, in addition to the orignal.
+
+    django doc reference: https://docs.djangoproject.com/en/4.0/topics/signals/
+    """
     loc = instance.image.path
     extension = loc.split(".")[-1]
     with WandImage(filename=loc) as img:

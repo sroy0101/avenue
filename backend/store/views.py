@@ -88,5 +88,5 @@ class CheckoutView(LoginRequiredMixin, View):
             return render(request, "checkout_success.html")
             pass
         else:
-            # Show checkout error
+            # Show checkout error. -- Future: show a form to collect the missing customer data.
             return render(request, "checkout_failure.html")

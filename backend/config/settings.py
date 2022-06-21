@@ -152,6 +152,7 @@ REST_FRAMEWORK = {
     ],
     "DEFAULT_PERMISSION_CLASSES": ("rest_framework.permissions.IsAuthenticated",),
 }
+# Swagger configs
 SPECTACULAR_SETTINGS = {
     "TITLE": "avenue",
     "DESCRIPTION": "API to power the merchant editor in the Avenue",
@@ -171,6 +172,6 @@ AUTH_USER_MODEL = "accounts.CustomUser"
 LOGIN_REDIRECT_URL = "store"
 LOGOUT_REDIRECT_URL = "store"
 
-CORS_ORIGIN_WHITELIST = ["http://localhost:3000",]
-
-
+CORS_ORIGIN_WHITELIST = [
+    "http://localhost:3000",
+]
