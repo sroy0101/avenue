@@ -6,12 +6,9 @@ class CartMiddleware:
         self.get_response = get_response
 
     def __call__(self, request):
-        """Create a cart for the user.
+        """Create a cart for the user if one doesn't exist and add to the request
 
-        If there is an existing cart, either of the user (if the user is authenticated) or the session, add it to the request.
-        Otherwise, create a new cart and add it to the request.
         The request is used by the CartView to create the context for the template.
-
         """
         session_key = request.session._get_or_create_session_key()
 
