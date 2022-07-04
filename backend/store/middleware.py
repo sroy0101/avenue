@@ -48,10 +48,12 @@ class OptimizelyMiddleware:
     def __call__(self, request):
         user = request.user
         request.optimizely_client = None
-        optimizely_sdk_key = "--Your SDK key from optimizely account--"
+        # Add your SDK key here
+        optimizely_sdk_key = ""
         try:
-            request.optimizely_client = optimizely.Optimizely(
-                sdk_key=optimizely_sdk_key
+            if optimizely_sdk_key:
+                request.optimizely_client = optimizely.Optimizely(
+                    sdk_key=optimizely_sdk_key
             )
         except:
             breakpoint()

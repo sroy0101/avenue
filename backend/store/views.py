@@ -29,7 +29,7 @@ class StoreDetailView(DetailView):
         # ** FOR TESTING ** Use random number to simulate different user-session_id to see if it randomply enabling and disabling the feature.
         user_session_id = str(random.randint(1000, 5000))
         feature_enabled = False
-        if optimizely_client.is_valid:
+        if optimizely_client and optimizely_client.is_valid:
             user_context = optimizely_client.create_user_context(
                 user_session_id, attributes=None
             )
