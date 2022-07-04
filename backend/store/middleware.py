@@ -54,9 +54,8 @@ class OptimizelyMiddleware:
             if optimizely_sdk_key:
                 request.optimizely_client = optimizely.Optimizely(
                     sdk_key=optimizely_sdk_key
-            )
+                )
         except:
-            breakpoint()
             print("source app - optimizely sdk not initialized.")
 
         response = self.get_response(request)

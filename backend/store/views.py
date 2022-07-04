@@ -76,6 +76,13 @@ class AddToCartView(View):
             else:
                 CartItem.objects.create(cart=cart, product=product)
 
+            # Send A/B Test event
+            optimizely_client = self.request.optimizely_client
+            if optimizely_client and optimizely_client.is_valid:
+                user_session_id = self.request.session._get_or_create_session_key()
+                user_context = optimizely_client.create_user_context(user_session_id)
+                user_context.track_event("Add To Bag")
+
         return HttpResponseRedirect(reverse("cart"))
 
 

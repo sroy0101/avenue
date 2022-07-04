@@ -243,7 +243,7 @@ pip install optimizely-sdk
 ```
 - Select the feature that needs to be controlled in your application.
 - Add a feature flag to control the selected feature in Optimizely and setup the Targeted Delivery rule. For example, you can configure the flag to be True for 50% of the users and false for the rest.
-In the code here, the feature to change the color of the `Add to Bag` button to green in the `storeDetails` page is controlled by a feature flag `button_color_green` configured in Optimizely.
+In the code here, the feature to change the color of the `Add to Bag` button to green in the `storeDetails` page is controlled by a feature flag `add_to_bag` configured in Optimizely.
 
 - Add the Default Variable for the flag in Optimizely. See Default Variables menu in Optimizely.
 - Add the code to the view class for the page where the feature is needed to be controlled.
@@ -260,8 +260,10 @@ In the code here, the session id is used as the `user_id`, because the user is n
 #### Development Tip:
 To test that the feature flag setting is working as expected, you can use a randomly generated user id to simulate different users and let Optimizely return flag decision to be both enabled and disabled at random.
 
-### A/B Tests
-- TBA
+### A/B Tests using Optimizely
+After the feature flag is created to control users' access features, we collect the users' actions in order to analyze the feature efficacy in Optimizely.
+In the code here, a tracking event is sent to Optimizely when the `Add to Bucket` button is cliceked.
+
 <br/>
 <br/>
 
