@@ -33,7 +33,7 @@ class StoreDetailView(DetailView):
             user_context = optimizely_client.create_user_context(
                 user_session_id, attributes=None
             )
-            feature_enabled = user_context.decide("button_color_green").enabled
+            feature_enabled = user_context.decide("add_to_bag").enabled
 
         context["button_color_green_enabled"] = feature_enabled
         return context
@@ -65,7 +65,6 @@ class AddToCartView(View):
     def get(self, request, product_id):
         product = Product.objects.filter(id=product_id).first()
         if product:
-            breakpoint()
             cart = request.cart
             cart_items = CartItem.objects.filter(cart=cart)
             already_there = next(
@@ -76,8 +75,6 @@ class AddToCartView(View):
                 already_there.save()
             else:
                 CartItem.objects.create(cart=cart, product=product)
-
-        # Send add to bag event for AB testing
 
         return HttpResponseRedirect(reverse("cart"))
 
