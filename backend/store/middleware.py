@@ -1,3 +1,5 @@
+from optimizely import optimizely
+
 from .models import Cart
 
 
@@ -34,4 +36,27 @@ class CartMiddleware:
         request.cart = cart
 
         response = self.get_response(request)
+        return response
+
+
+class OptimizelyMiddleware:
+    """Create the optimizely client"""
+
+    def __init__(self, get_response):
+        self.get_response = get_response
+
+    def __call__(self, request):
+        user = request.user
+        request.optimizely_client = None
+        optimizely_sdk_key = "--Your SDK key from optimizely account--"
+        try:
+            request.optimizely_client = optimizely.Optimizely(
+                sdk_key=optimizely_sdk_key
+            )
+        except:
+            breakpoint()
+            print("source app - optimizely sdk not initialized.")
+
+        response = self.get_response(request)
+
         return response

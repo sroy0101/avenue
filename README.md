@@ -228,6 +228,43 @@ Use - `cd frontend; npm run e2e-ui` and then from the opened UI:
 ### Notes
 Detail notes for running cypress in Windows WSL2 environment is provided in the README file in the cypress folder.
 
+## Featre flag and A/B Testing
+Use of feature flag using Optimizely Full Stack feature flagging and A/B testing service is added as an example.
+The code may be used as a template for controlling other features.
+
+### Feature flag Implementation Steps using Optimizely
+- Create Optimizely account and get the SDK key.
+- Install the Optimizely python SDK.
+```
+# From the project root select virtual env
+source venv/bin/activate
+# Install the optimizely SDk
+pip install optimizely-sdk
+```
+- Select the feature that needs to be controlled in your application.
+- Add a feature flag to control the selected feature in Optimizely and setup the Targeted Delivery rule. For example, you can configure the flag to be True for 50% of the users and false for the rest.
+In the code here, the feature to change the color of the `Add to Bag` button to green in the `storeDetails` page is controlled by a feature flag `button_color_green` configured in Optimizely.
+
+- Add the Default Variable for the flag in Optimizely. See Default Variables menu in Optimizely.
+- Add the code to the view class for the page where the feature is needed to be controlled.
+```
+user_context = optimizely_client.create_user_context(user_id)
+decision = user_context.decide('Name of the feature flag created in Optimizely')
+```
+- Use the `decision.enabled` to enable or disable the feature.
+In the code here, it is added to the data context to be used by the `store_details.html` template.
+
+#### Note:
+In the code here, the session id is used as the `user_id`, because the user is not required to be logged in (hence the no user id) to view the `Add to Bag` button.
+
+#### Development Tip:
+To test that the feature flag setting is working as expected, you can use a randomly generated user id to simulate different users and let Optimizely return flag decision to be both enabled and disabled at random.
+
+### A/B Tests
+- TBA
+<br/>
+<br/>
+
 
 ## Seed Data Login Details
 
@@ -241,7 +278,6 @@ Detail notes for running cypress in Windows WSL2 environment is provided in the 
 ## Future Functionaility
 
 - Moving media files to S3/Cloudfront with the use of Localstack for testing.
-- End-to-end testing using Cypress testing framework.
 - Continuous integration and deployment (CI/CD) pipelines.
 - Deployment to K8s.
 -

@@ -1,3 +1,4 @@
+import random
 from typing import Any, Dict
 
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -18,8 +19,24 @@ class StoreView(ListView):
 
 class StoreDetailView(DetailView):
     model = Product
-    context_object_name = "product"
     template_name: str = "store_detail.html"
+    context_object_name = "product"
+
+    def get_context_data(self, **kwargs):
+        context = super(StoreDetailView, self).get_context_data(**kwargs)
+        optimizely_client = self.request.optimizely_client
+        # user_session_id = self.request.session._get_or_create_session_key()
+        # ** FOR TESTING ** Use random number to simulate different user-session_id to see if it randomply enabling and disabling the feature.
+        user_session_id = str(random.randint(1000, 5000))
+        feature_enabled = False
+        if optimizely_client.is_valid:
+            user_context = optimizely_client.create_user_context(
+                user_session_id, attributes=None
+            )
+            feature_enabled = user_context.decide("button_color_green").enabled
+
+        context["button_color_green_enabled"] = feature_enabled
+        return context
 
 
 class CartView(TemplateView):
