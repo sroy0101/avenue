@@ -25,9 +25,9 @@ class StoreDetailView(DetailView):
     def get_context_data(self, **kwargs):
         context = super(StoreDetailView, self).get_context_data(**kwargs)
         optimizely_client = self.request.optimizely_client
-        # user_session_id = self.request.session._get_or_create_session_key()
+        user_session_id = self.request.session._get_or_create_session_key()
         # ** FOR TESTING ** Use random number to simulate different user-session_id to see if it randomply enabling and disabling the feature.
-        user_session_id = str(random.randint(1000, 5000))
+        # user_session_id = str(random.randint(1000, 5000))
         feature_enabled = False
         if optimizely_client and optimizely_client.is_valid:
             user_context = optimizely_client.create_user_context(
@@ -65,6 +65,7 @@ class AddToCartView(View):
     def get(self, request, product_id):
         product = Product.objects.filter(id=product_id).first()
         if product:
+            breakpoint()
             cart = request.cart
             cart_items = CartItem.objects.filter(cart=cart)
             already_there = next(
@@ -75,6 +76,9 @@ class AddToCartView(View):
                 already_there.save()
             else:
                 CartItem.objects.create(cart=cart, product=product)
+
+        # Send add to bag event for AB testing
+
         return HttpResponseRedirect(reverse("cart"))
 
 
